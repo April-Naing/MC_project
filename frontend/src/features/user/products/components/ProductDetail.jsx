@@ -25,6 +25,7 @@ const ProductDetail = () => {
   const { id } = useParams();
   const { data: productData, isLoading } = useGetProductById(id);
   const product = productData?.data?.data?.product;
+  console.log("product from detail", product);
 
   const discount = product?.discounts.find((d) => d.roleId === user?.role?._id);
   const discountedPrice = discount
@@ -118,6 +119,7 @@ const ProductDetail = () => {
                   </Button>
                   <Button
                     onClick={addToCartHandler}
+                    disabled={counter === 0}
                     className="my-4 bg-teal-600 hover:bg-teal-700 md:w-full rounded-full"
                   >
                     Add To Cart
