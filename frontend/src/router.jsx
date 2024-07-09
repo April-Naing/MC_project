@@ -62,7 +62,6 @@ const router = createBrowserRouter([
               { index: true, element: <UserInfo /> },
               { path: "coupons", element: <Coupons /> },
               { path: "pointChange", element: <PointChanger /> },
-              { path: "" },
             ],
           },
         ],

@@ -8,6 +8,7 @@ import { animateScroll as scroll } from "react-scroll";
 
 function App() {
   const location = useLocation();
+  console.log("location", location);
 
   useEffect(() => {
     if (location.pathname === "/home" && location.hash) {
