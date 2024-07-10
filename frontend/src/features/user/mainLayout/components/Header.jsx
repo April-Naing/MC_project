@@ -1,17 +1,8 @@
 import Cart from "@/assets/icons/cart.svg?react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { animateScroll as scroll } from "react-scroll";
 
 const Header = () => {
-  // const navigate = useNavigate();
-  // const scrollToSection = (id) => {
-  //   scroll.scrollTo(document.getElementById(id).offsetTop, {
-  //     duration: 500,
-  //     smooth: true,
-  //   });
-  // };
-
   return (
     <>
       <header className="fixed top-0 left-0 right-0 py-8 flex items-center shadow-sm justify-between bg-white z-50">
@@ -25,7 +16,6 @@ const Header = () => {
             <li>
               <Link
                 to="/home#products"
-                // onClick={() => scrollToSection("products")}
                 className=" text-teal-600 hover:text-teal-800"
               >
                 SHOP
@@ -34,7 +24,6 @@ const Header = () => {
             <li>
               <Link
                 to="/home#promotions"
-                // onClick={() => scrollToSection("promotions")}
                 className=" text-teal-600 hover:text-teal-800"
               >
                 PROMOTIONS
@@ -43,7 +32,6 @@ const Header = () => {
             <li>
               <Link
                 to="/home#contact"
-                // onClick={() => scrollToSection("contact")}
                 className=" text-teal-600 hover:text-teal-800"
               >
                 CONTACT US

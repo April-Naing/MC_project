@@ -83,7 +83,7 @@ const Promotions = () => {
                   </TableCell>
                   <TableCell>{promotion.description}</TableCell>
                   <TableCell>{promotion.code}</TableCell>
-                  <TableCell>{promotion.amount}</TableCell>
+                  <TableCell>{promotion.amount} % </TableCell>
                   <TableCell>{formatDate(promotion.startDate)}</TableCell>
                   <TableCell>{formatDate(promotion.endDate)}</TableCell>
                   <TableCell className="text-center">

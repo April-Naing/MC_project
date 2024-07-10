@@ -50,7 +50,6 @@ const CouponsList = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {/* <Spinner className="fa-spin" /> */}
             {!isLoading &&
               coupons &&
               coupons.map((coupon) => (
@@ -59,7 +58,7 @@ const CouponsList = () => {
                   <TableCell>{formatDate(coupon.startDate)}</TableCell>
                   <TableCell>{formatDate(coupon.endDate)}</TableCell>
                   <TableCell className="text-center">
-                    {coupon.discountPrice}
+                    {coupon.discountPrice} %
                   </TableCell>
                   <TableCell>
                     <Button

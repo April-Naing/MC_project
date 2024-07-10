@@ -1,16 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  getCouponByCode,
-  useGetCouponByCode,
-} from "@/features/admin/coupon/api/get-coupon";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useGetCouponByUser } from "@/features/admin/coupon/api/get-user-coupon";
 import { useGetCartItemsByUser } from "../api/get-cart-item";
 import { useCreateOrder } from "@/features/admin/order/api/create-order";
 import { toast } from "react-toastify";
 import { queryClient } from "@/main";
-import { useDeleteUserCoupon } from "@/features/admin/coupon/api/delete-user-coupon";
 import { useEditUserCoupon } from "@/features/admin/coupon/api/update-user-coupon";
 import { useGetUserPromotionByUser } from "../../promotion/api/get-user-promotion";
 import { useEditUserPromotion } from "../../promotion/api/edit-user-promotion";
@@ -29,6 +24,7 @@ const Summary = () => {
   const subTotal = cartItems?.reduce((acc, item) => acc + item.price, 0);
 
   const userId = cartItems ? cartItems[0]?.user?._id : "";
+
   // get user's coupon
   const { data: userCouponData } = useGetCouponByUser();
   const userCoupons = userCouponData?.data?.data;
@@ -82,8 +78,11 @@ const Summary = () => {
 
   // handle check out
   const checkOutHandler = () => {
+    const totalAmount = discount
+      ? subTotal - subTotal * (discount / 100)
+      : subTotal;
     createOrderMutation(
-      { userId },
+      { userId, totalAmount },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({

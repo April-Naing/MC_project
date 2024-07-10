@@ -17,7 +17,7 @@ const CreateProduct = ({ isOpen, setIsOpen }) => {
     resolver: zodResolver(productSchema),
   });
 
-  const { mutate: createProduct, isLoading } = useCreateProduct();
+  const { mutate: createProduct, isLoading: isCreating } = useCreateProduct();
 
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -56,10 +56,15 @@ const CreateProduct = ({ isOpen, setIsOpen }) => {
         <DialogHeader>
           <DialogTitle>Create Product</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you are done.
           </DialogDescription>
         </DialogHeader>
-        <ProductForm form={form} onSubmit={onSubmit} />
+        <ProductForm
+          form={form}
+          onSubmit={onSubmit}
+          process="create"
+          isPending={isCreating}
+        />
       </DialogContent>
     </Dialog>
   );

@@ -14,7 +14,7 @@ import CouponForm from "../components/CouponForm";
 const CreateCoupon = ({ isOpen, setIsOpen }) => {
   const form = useForm();
 
-  const { mutate: createCoupon, isLoading } = useCreateCoupon();
+  const { mutate: createCoupon, isLoading: isCreating } = useCreateCoupon();
 
   const onSubmit = (data) => {
     createCoupon(data, {
@@ -37,10 +37,15 @@ const CreateCoupon = ({ isOpen, setIsOpen }) => {
         <DialogHeader>
           <DialogTitle className="ms-2">Create Coupon</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when yoy are done.
+            Make changes to your profile here. Click save when you are done.
           </DialogDescription>
         </DialogHeader>
-        <CouponForm form={form} onSubmit={onSubmit} process="create" />
+        <CouponForm
+          form={form}
+          onSubmit={onSubmit}
+          process="create"
+          isPending={isCreating}
+        />
       </DialogContent>
     </Dialog>
   );

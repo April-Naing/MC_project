@@ -1,31 +1,46 @@
 import { Button } from "@/components/ui/button";
 import { useGetProductById } from "@/features/admin/products/api/get-products";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import Add from "@/assets/icons/add.svg?react";
 import Subtract from "@/assets/icons/subtract.svg?react";
 import { useDispatch, useSelector } from "react-redux";
 import { counterActions } from "@/store/counter-slice";
-import { useCreateOrderItems } from "@/features/admin/order-items/api/create-order-items";
 import { toast } from "react-toastify";
-import { cartActions } from "@/store/cart-slice";
 import { useGetMe } from "@/features/admin/users/api/get-users";
 import { useCreateCartItems } from "../../Cart/api/create-cart-item";
 import Back from "@/assets/icons/back.svg?react";
+import { useEditCartItem } from "../../Cart/api/edit-cart-item";
+import { queryClient } from "@/main";
+import { useGetCartItemById } from "../../Cart/api/get-cart-item";
+import { useEffect } from "react";
 
 const ProductDetail = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const cartItemId = queryParams.get("edit");
+
   const baseURL = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch();
 
-  const counter = useSelector((state) => state.counter.counter);
+  let counter = useSelector((state) => state.counter.counter);
 
   const { data: userData } = useGetMe();
   const user = userData?.data?.data?.user;
 
   const { id } = useParams();
+
   const { data: productData, isLoading } = useGetProductById(id);
   const product = productData?.data?.data?.product;
-  console.log("product from detail", product);
+
+  const { data: cartItemData } = useGetCartItemById(cartItemId);
+  const cartItemQty = cartItemData?.data?.data?.quantity;
+
+  useEffect(() => {
+    if (cartItemId && cartItemQty) {
+      dispatch(counterActions.setCounter(cartItemQty));
+    }
+  }, [cartItemId, cartItemQty, dispatch]);
 
   const discount = product?.discounts.find((d) => d.roleId === user?.role?._id);
   const discountedPrice = discount
@@ -40,7 +55,11 @@ const ProductDetail = () => {
     dispatch(counterActions.remove());
   };
 
-  const { mutate: createCartItemMutation, isPending } = useCreateCartItems();
+  const { mutate: createCartItemMutation, isPending: isCreating } =
+    useCreateCartItems();
+
+  const { mutate: editCartItemMutation, isPending: isEditing } =
+    useEditCartItem();
 
   const addToCartHandler = () => {
     const totalPrice = discountedPrice
@@ -54,14 +73,31 @@ const ProductDetail = () => {
       user: user._id,
     };
 
-    createCartItemMutation(data, {
-      onSuccess: () => {
-        toast.success("The product has added to the cart.");
-      },
-      onError: () => {
-        toast.error("Fail to add product to the cart.Try Again later.");
-      },
-    });
+    if (cartItemId) {
+      editCartItemMutation(
+        { id: cartItemId, data },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: ["cartItemsByUser"],
+            });
+            toast.success("The updated item has added to the cart.");
+          },
+          onError: () => {
+            toast.error("Fail to add product to the cart.Try Again later.");
+          },
+        }
+      );
+    } else {
+      createCartItemMutation(data, {
+        onSuccess: () => {
+          toast.success("The product has added to the cart.");
+        },
+        onError: () => {
+          toast.error("Fail to add product to the cart.Try Again later.");
+        },
+      });
+    }
   };
 
   return (
@@ -122,7 +158,7 @@ const ProductDetail = () => {
                     disabled={counter === 0}
                     className="my-4 bg-teal-600 hover:bg-teal-700 md:w-full rounded-full"
                   >
-                    Add To Cart
+                    {isEditing || isCreating ? "Adding..." : "Add To Cart"}
                   </Button>
                 </div>
               </div>

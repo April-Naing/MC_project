@@ -13,15 +13,14 @@ import CouponForm from "../components/CouponForm";
 import { useGetCouponById } from "../api/get-coupon";
 
 const EditCoupon = ({ isOpen, setIsOpen, couponId }) => {
-  const form = useForm({
-    // resolver: zodResolver(productSchema),
-  });
+  const form = useForm();
 
   const { data: couponData, isLoading: isGettingData } =
     useGetCouponById(couponId);
 
   const coupon = couponData?.data?.data;
-  const { mutate: updateCoupon, isLoading } = useUpdateCoupon(couponId);
+  const { mutate: updateCoupon, isLoading: isEditing } =
+    useUpdateCoupon(couponId);
 
   const onSubmit = (data) => {
     updateCoupon(
@@ -47,13 +46,14 @@ const EditCoupon = ({ isOpen, setIsOpen, couponId }) => {
         <DialogHeader>
           <DialogTitle className="ms-2">Edit Coupon</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you are done.
           </DialogDescription>
         </DialogHeader>
         <CouponForm
           form={form}
           onSubmit={onSubmit}
           coupon={coupon}
+          isPending={isEditing}
           process="Edit"
         />
       </DialogContent>

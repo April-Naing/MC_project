@@ -27,7 +27,7 @@ const PointChanger = () => {
           coupons.map((coupon) => (
             <Card className="mt-4 shadow-lg" key={coupon._id}>
               <CardHeader>
-                <CardTitle>{coupon.discountPrice} OFF</CardTitle>
+                <CardTitle>{coupon.discountPrice}% OFF</CardTitle>
                 <CardDescription>on purchase</CardDescription>
                 <h3 className="font-semibold">Code : {coupon.code}</h3>
               </CardHeader>

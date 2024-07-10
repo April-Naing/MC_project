@@ -8,10 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import {
-  useGetOrderItems,
-  useGetOrderItemsByUser,
-} from "@/features/admin/order-items/api/get-order-items";
 import { useState, Fragment } from "react";
 import { useGetCartItemsByUser } from "../api/get-cart-item";
 import Delete from "@/assets/icons/cross.svg?react";
@@ -29,6 +25,7 @@ const CartItems = () => {
   const { data: cartItemsDataByUser, isLoading } = useGetCartItemsByUser();
   const cartItems = cartItemsDataByUser?.data?.data;
 
+  console.log(cartItems);
   const { data: userData } = useGetMe();
   const userRoleId = userData?.data?.data?.user?.role?._id;
 
@@ -104,7 +101,9 @@ const CartItems = () => {
                       </Button>
                     </TableCell>
                     <TableCell>
-                      <Link to={`/home/product/${cartItem.product._id}`}>
+                      <Link
+                        to={`/home/product/${cartItem.product._id}?edit=${cartItem._id}`}
+                      >
                         <Button
                           variant="outline"
                           size="sm"

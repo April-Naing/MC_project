@@ -5,11 +5,20 @@ const counterSlice = createSlice({
   name: "counter",
   initialState: initial,
   reducers: {
+    setCounter: (state, action) => {
+      state.counter = action.payload;
+    },
     add: (state) => {
+      console.log("before slice", state.counter);
+
       state.counter++;
+      console.log("slice", state.counter);
     },
     remove: (state) => {
+      console.log("before slice", state.counter);
+
       state.counter--;
+      console.log("slice", state.counter);
     },
   },
 });

@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Controller } from "react-hook-form";
 import { useGetRoles } from "../../role/api/get-role";
+import Loading from "@/assets/icons/loading.svg?react";
 
-const ProductForm = ({ form, onSubmit, product }) => {
+const ProductForm = ({ form, onSubmit, product, process, isPending }) => {
   const inputStyle = "rounded-full bg-slate-100 p-3 focus:ring-0";
   const {
     register,
@@ -188,7 +189,17 @@ const ProductForm = ({ form, onSubmit, product }) => {
             type="submit"
             className="rounded-full bg-cyan-500 text-white hover:bg-cyan-400 hover:text-white"
           >
-            Create
+            {isPending && (
+              <div className="flex">
+                <Loading className="w-4 icon mx-2 text-slate-600" />
+                <span className="text-slate-600">
+                  {process === "create" ? "Creating ..." : "Updating ..."}
+                </span>
+              </div>
+            )}
+            {!isPending && (
+              <span>{process === "create" ? "Create" : "Update"}</span>
+            )}
           </Button>
         </DialogFooter>
       </form>

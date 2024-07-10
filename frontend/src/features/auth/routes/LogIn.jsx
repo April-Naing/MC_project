@@ -18,7 +18,7 @@ const Login = () => {
     resolver: zodResolver(logInSchema),
   });
 
-  const { mutate: login, isPending, error } = useLogin();
+  const { mutate: login, isPending: isLogging } = useLogin();
 
   const onSubmit = handleSubmit((data) => {
     login(data, {
@@ -88,7 +88,7 @@ const Login = () => {
               variant="outline"
               className="w-full rounded-full my-4 bg-cyan-500 text-white hover:bg-cyan-400 hover:text-white"
             >
-              Log In
+              {isLogging ? "Logging in..." : "Log In"}
             </Button>
           </div>
         </form>

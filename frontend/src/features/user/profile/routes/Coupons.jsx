@@ -6,7 +6,6 @@ import Expired from "@/assets/icons/expired.svg?react";
 import { useGetUserPromotionByUser } from "../../promotion/api/get-user-promotion";
 import Delete from "@/assets/icons/delete.svg?react";
 import { useDeleteUserCoupon } from "@/features/admin/coupon/api/delete-user-coupon";
-import { useGetUser } from "../api/get-user";
 import { queryClient } from "@/main";
 import { toast } from "react-toastify";
 import { useDeleteUserPromotion } from "../../promotion/api/delete-user-promotion";
@@ -21,6 +20,7 @@ const Coupons = () => {
     useGetUserPromotionByUser();
   const promotionCoupons = promotionCouponData?.data?.data;
 
+  console.log("promo", promotionCoupons);
   const { mutate: deleteCouponMutation } = useDeleteUserCoupon();
 
   const couponDeleteHandler = (couponId) => {
@@ -68,12 +68,12 @@ const Coupons = () => {
                   Code : {coupon.coupon.code}
                 </h3>
                 <h3 className=" text-xs sm:text-base">
-                  {coupon.coupon.discountPrice} off on any purchase
+                  {coupon.coupon.discountPrice} % off on any purchase
                 </h3>
               </div>
               <div className="">
                 <h1 className="ps-4 sm:pt-2 sm:m-auto text-sm sm:text-xl">
-                  {coupon.coupon.discountPrice} Off
+                  {coupon.coupon.discountPrice} % Off
                 </h1>
               </div>
             </CardContent>
@@ -107,12 +107,12 @@ const Coupons = () => {
                   Code : {promotionCoupon.promotion.code}
                 </h3>
                 <h3 className=" text-xs sm:text-base">
-                  {promotionCoupon.promotion.discountPrice} off on any purchase
+                  {promotionCoupon.promotion.amount} % off on any purchase
                 </h3>
               </div>
               <div className="">
                 <h1 className="ps-4 sm:pt-2 sm:m-auto text-sm sm:text-xl">
-                  {promotionCoupon.promotion.discountPrice} Off
+                  {promotionCoupon.promotion.amount}% Off
                 </h1>
               </div>
             </CardContent>

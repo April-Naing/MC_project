@@ -12,6 +12,17 @@ export const useGetCartItems = () => {
   });
 };
 
+export const getCartItemById = async (id) => {
+  return api.get(`/cartItems/${id}`);
+};
+
+export const useGetCartItemById = (id) => {
+  return useQuery({
+    queryKey: ["cartItem"],
+    queryFn: () => getCartItemById(id),
+  });
+};
+
 export const getCartItemsByUser = async () => {
   return api.get("/cartItems/user");
 };

@@ -104,7 +104,7 @@ const PromotionForm = ({ form, onSubmit, promotion, process, isPending }) => {
         </div>
         <div className="flex flex-row space-x-12 mx-2 mb-6">
           <div className="w-1/2">
-            <Label className="me-auto ms-3">Discount Amount</Label>
+            <Label className="me-auto ms-3">Discount Amount(%)</Label>
             <Input
               type="number"
               {...register("amount", { valueAsNumber: true })}

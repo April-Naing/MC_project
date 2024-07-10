@@ -25,7 +25,7 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const { mutate: signUp, isPending } = useRegister();
+  const { mutate: signUp, isPending: isSigning } = useRegister();
 
   const onSubmit = handleSubmit((data) => {
     signUp(data, {
@@ -116,7 +116,7 @@ const Register = () => {
                 type="submit"
                 className="w-full rounded-full bg-cyan-500 text-white hover:bg-cyan-400 hover:text-white"
               >
-                Sign Up
+                {isSigning ? "Signing up..." : "Sign Up"}
               </Button>
             </div>
           </div>

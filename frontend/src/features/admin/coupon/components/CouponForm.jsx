@@ -3,8 +3,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { formatEditDate } from "@/util/dateFormatter";
+import Loading from "@/assets/icons/loading.svg?react";
 
-const CouponForm = ({ form, onSubmit, coupon, process }) => {
+const CouponForm = ({ form, onSubmit, coupon, process, isPending }) => {
   const inputStyle = "rounded-full bg-slate-100 p-3 focus:ring-0";
 
   const {
@@ -34,11 +35,6 @@ const CouponForm = ({ form, onSubmit, coupon, process }) => {
             className={inputStyle}
             {...register("code")}
           />
-          {/* {errors.description && (
-                    <p className="text-red-500 me-auto text-sm ms-4">
-                      {errors.description.message}
-                    </p>
-                  )} */}
         </div>
         <div className="flex flex-row space-x-12 mx-2">
           <div className="w-1/2">
@@ -48,11 +44,6 @@ const CouponForm = ({ form, onSubmit, coupon, process }) => {
               {...register("startDate")}
               className={inputStyle}
             />
-            {/* {errors.name && (
-                      <p className="text-red-500 me-auto text-sm ms-4">
-                        {errors.name.message}
-                      </p>
-                    )} */}
           </div>
           <div className="w-1/2">
             <Label className="me-auto ms-3">End Date</Label>
@@ -72,11 +63,6 @@ const CouponForm = ({ form, onSubmit, coupon, process }) => {
               placeholder="Enter discount amount"
               className={inputStyle}
             />
-            {/* {errors.originalPrice && (
-                    <p className="text-red-500 me-auto text-sm ms-4">
-                      {errors.originalPrice.message}
-                    </p>
-                  )} */}
           </div>
           <div className="w-1/2">
             <Label className="me-auto ms-3">Point</Label>
@@ -101,11 +87,6 @@ const CouponForm = ({ form, onSubmit, coupon, process }) => {
             placeholder="Enter available time"
             className={`w-1/2 ${inputStyle}`}
           />
-          {/* {errors.originalPrice && (
-                    <p className="text-red-500 me-auto text-sm ms-4">
-                      {errors.originalPrice.message}
-                    </p>
-                  )} */}
         </div>
       </div>
       <DialogFooter>
@@ -113,12 +94,21 @@ const CouponForm = ({ form, onSubmit, coupon, process }) => {
           type="submit"
           className="rounded-full bg-cyan-500 text-white hover:bg-cyan-400 hover:text-white"
         >
+          {isPending && (
+            <div className="flex">
+              <Loading className="w-4 icon mx-2 text-slate-600" />
+              <span className="text-slate-600">
+                {process === "create" ? "Creating ..." : "Updating ..."}
+              </span>
+            </div>
+          )}
+          {!isPending && (
+            <span>{process === "create" ? "Create" : "Update"}</span>
+          )}
           {process === "create" ? "Create" : "Update"}
         </Button>
       </DialogFooter>
     </form>
-    //   </DialogContent>
-    // </Dialog>
   );
 };
 

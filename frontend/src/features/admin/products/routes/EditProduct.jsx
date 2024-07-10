@@ -24,7 +24,8 @@ const EditProduct = ({ isOpen, setIsOpen, productId }) => {
     resolver: zodResolver(productSchema),
   });
 
-  const { mutate: updateProduct, isLoading: isUpdating } = useUpdateProduct();
+  const { mutate: editProductMutation, isLoading: isEditing } =
+    useUpdateProduct();
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
@@ -34,7 +35,7 @@ const EditProduct = ({ isOpen, setIsOpen, productId }) => {
     formData.append("discountAmount", data.discountAmount);
     formData.append("userRole", data.userRole);
 
-    updateProduct(
+    editProductMutation(
       { id: productId, data: formData },
       {
         onSuccess: () => {
@@ -58,11 +59,17 @@ const EditProduct = ({ isOpen, setIsOpen, productId }) => {
         <DialogHeader>
           <DialogTitle>Edit Product</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you are done.
           </DialogDescription>
         </DialogHeader>
 
-        <ProductForm form={form} onSubmit={onSubmit} product={product} />
+        <ProductForm
+          form={form}
+          onSubmit={onSubmit}
+          product={product}
+          process="edit"
+          isPending={isEditing}
+        />
       </DialogContent>
     </Dialog>
   );

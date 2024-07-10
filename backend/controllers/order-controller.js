@@ -78,7 +78,7 @@ exports.deleteOrder = catchAsync(async (req, res, next) => {
 });
 
 exports.createOrderByUser = catchAsync(async (req, res) => {
-  const { userId } = req.body;
+  const { userId, totalAmount } = req.body;
 
   try {
     const cartItems = await CartItem.find({ user: userId });
@@ -93,22 +93,11 @@ exports.createOrderByUser = catchAsync(async (req, res) => {
           order: null,
           product: item.product._id,
           quantity: item.quantity,
-          price: item.product.originalPrice,
+          price: item.price,
         }).save();
       })
     );
-
-    const totalAmount = orderItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-
     const user = await User.findById(userId);
-    // if (!user.role) {
-    //   await updateUserService(user._id, {
-    //     role: "668226eb0c63c85b9912074e",
-    //   });
-    // }
 
     let pointsEarned = 0;
     if (user.role) {
