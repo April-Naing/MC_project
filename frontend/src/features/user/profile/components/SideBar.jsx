@@ -30,6 +30,7 @@ const SideBar = () => {
         </div>
         <nav className="mt-4">
           <ul className="space-y-2">
+            {/* need to repair list > link */}
             <Link to="" className="my-2">
               <List>
                 <div className="flex sm:m-auto">

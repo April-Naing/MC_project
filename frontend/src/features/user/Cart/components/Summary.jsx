@@ -154,7 +154,7 @@ const Summary = () => {
         <span className="ms-3 block text-red-500">{couponErr}</span>
         <Button
           onClick={couponHandler}
-          className="my-3 bg-neutral-300 text-teal-950 hover:bg-neutral-400"
+          className="my-3 text-neutral-300 bg-teal-900 hover:bg-teal-800"
         >
           Apply
         </Button>
@@ -172,7 +172,7 @@ const Summary = () => {
       <div className="my-4">
         <button
           onClick={checkOutHandler}
-          className="w-full bg-neutral-300 text-teal-900 py-2 rounded-lg mb-2"
+          className="w-full text-neutral-300 bg-teal-900 py-2 rounded-lg mb-2"
         >
           CHECK OUT
         </button>

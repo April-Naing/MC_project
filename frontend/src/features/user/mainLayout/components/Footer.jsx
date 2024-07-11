@@ -27,7 +27,7 @@ const Footer = () => {
             </List>
             <List>
               <Location className="icon w-4 mr-2" />
-              Califonia , New York
+              California , New York
             </List>
           </ul>
         </div>

@@ -14,7 +14,9 @@ const ProtectedRoute = () => {
   const navigate = useNavigate();
 
   if (!isLoading) {
+    console.log(user);
     if (!user) {
+      console.log(user);
       navigate("/login");
     }
 

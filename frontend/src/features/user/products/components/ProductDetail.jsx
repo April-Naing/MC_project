@@ -62,6 +62,7 @@ const ProductDetail = () => {
     useEditCartItem();
 
   const addToCartHandler = () => {
+    dispatch(counterActions.setCounter(0));
     const totalPrice = discountedPrice
       ? discountedPrice * counter
       : product?.originalPrice * counter;
