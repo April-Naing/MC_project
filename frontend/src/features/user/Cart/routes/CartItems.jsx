@@ -32,7 +32,11 @@ const CartItems = () => {
   return (
     <div className="mt-4">
       <Table className="w-10/12 md:w-11/12 ms-12 ">
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableCaption>
+          {cartItems?.length > 0
+            ? "A list of your recent cart items."
+            : "Add items to cart and explore your shopping..."}
+        </TableCaption>
         <TableHeader>
           <TableRow className="border-b-2 border-b-teal-700 hover:bg-white">
             <TableHead className="w-[100px] text-lg text-teal-700">

@@ -91,6 +91,9 @@ const ProductDetail = () => {
     } else {
       createCartItemMutation(data, {
         onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ["cartItemsByUser"],
+          });
           toast.success("The product has added to the cart.");
         },
         onError: () => {

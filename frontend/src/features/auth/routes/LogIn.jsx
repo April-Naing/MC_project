@@ -73,7 +73,7 @@ const Login = () => {
               </Label>
               <Input
                 type="password"
-                placeholder="Enter at least 8 characters"
+                placeholder="Enter your password"
                 className="rounded-full p-3 bg-slate-100 focus:ring-0"
                 {...register("password")}
               />
